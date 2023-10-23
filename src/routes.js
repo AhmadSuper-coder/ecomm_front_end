@@ -7,6 +7,7 @@ import Cart from './pages/Cart';
 import Checkout from './pages/Checkout';
 import Login from './components/Auth/Login';
 import UserProfile from './pages/UserProfile';
+import SignUp from './components/Auth/Signup';
 
 const AppRoutes = () => {
   return (
@@ -18,6 +19,7 @@ const AppRoutes = () => {
     <Route path="/checkout" element={<Checkout />} />
     <Route path="/login" element={<Login/>} />
     <Route path="/profile" element={<UserProfile/>} />
+    <Route path="/register" element={<SignUp/>} />
     </Routes>
 
   );

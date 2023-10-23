@@ -28,27 +28,8 @@ function Login() {
                 alert('Please enter a valid email address.');
                 return;
             }
-            console.log("before hitting the api ")
-            
-            // Define an asynchronous function to make the API call
-          // const loginUser = async () => {
-          //   try {
-          //     console.log("before calling hte api ")
-          //     const response = await LoginUsersUrl(LoginData);
-          //     // Handle the response here
-          //     console.log('API Response:', response);
 
-          //     // You can add further logic to handle the response as needed
-          //   } catch (error) {
-          //     // Handle any errors that occur during the API call
-          //     console.error('API Error:', error);
-          //   }
-          // };
           const response = await LoginUsersUrl(LoginData);
-          console.log(response)
-          console.log(response.status)
-          // loginUser()
-          // let response =await axios.post(`http://127.0.0.1:8000/api/user/login/`,LoginData);
 
         }
         catch(e){

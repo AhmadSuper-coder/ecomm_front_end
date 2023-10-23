@@ -1,6 +1,7 @@
 import axios from 'axios';
 import Login from '../components/Auth/Login';
 import {getAccessToken,getRefreshToken,setAccessToken,setRefreshToken } from '../utils/CommonUtils';
+import { resolvePath } from 'react-router-dom';
 
 // https://rapidapi.com/guides/custom-axios-instance
 const BaseUrl = 'http://127.0.0.1:8000'
@@ -45,8 +46,9 @@ export const LoginUsersUrl = async (LoginData) => {
     try {
       // Make the API request
       const response = await axios.post(`${BaseUrl}/api/user/login/`, LoginData);
-      setAccessToken(response.data.token.accessToken)
-      setRefreshToken(response.data.token.refreshToken)
+      console.log(response.data.token)
+      setAccessToken(response.data.token.access)
+      setRefreshToken(response.data.token.refresh)
       console.log(getAccessToken())
       console.log(getAccessToken())
       // If the request is successful, return the response data
@@ -64,6 +66,36 @@ export const UserProfileUrl = async () => {
     try {
       // Make the API request
       const response = await axiosInstance.get(`${BaseUrl}/api/user/profile/`);
+      return response.data;
+    } catch (error) {
+      // If there's an error in the API call, handle it here
+      console.error('API Error:', error);
+      // You can throw the error or return an error object, or handle it as needed
+      throw error;
+    }
+  };
+
+
+
+  export const UserCartUrl = async () => {
+    try {
+      // Make the API request
+      const response = await axiosInstance.get(`${BaseUrl}/cart/getcart/`);
+      return response.data;
+    } catch (error) {
+      // If there's an error in the API call, handle it here
+      console.error('API Error:', error);
+      // You can throw the error or return an error object, or handle it as needed
+      throw error;
+    }
+  };
+
+
+
+  export const SignUpUserUrl = async (SignUpData) => {
+    try {
+      // Make the API request
+      const response = await axiosInstance.post(`${BaseUrl}/api/user/register/`, SignUpData);
       return response.data;
     } catch (error) {
       // If there's an error in the API call, handle it here

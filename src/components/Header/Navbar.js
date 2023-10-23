@@ -42,6 +42,10 @@ function Navbar() {
                                 <Link className="nav-link" to="/login"> <span style={{fontSize:"20px",marginRight:"3px"}} ><AiOutlineLogin/></span>Login</Link>
                             </li>
 
+                            <li className="nav-item">
+                                <Link className="nav-link" to="/register"> <span style={{fontSize:"20px",marginRight:"3px"}} ><AiOutlineLogin/></span>SignUp</Link>
+                            </li>
+
                         </ul>
                         
                     </div>
