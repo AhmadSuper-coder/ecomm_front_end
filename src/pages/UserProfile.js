@@ -2,7 +2,7 @@ import React,{useEffect,useState} from 'react'
 // import Head from '../../Common/Head';
 import profile from "../assets/profile.png"
 import { UserProfileUrl } from '../services/api';
-
+import { useNavigate } from 'react-router-dom';
 const mystyle= {
   width:"100%",
 }
@@ -11,18 +11,18 @@ function UserProfile() {
 
 
   const [userData, setUserData] = useState(null);
-
+  const Navigate=useNavigate();
   useEffect(() => {
     // Define an asynchronous function to fetch user profile data
     const fetchUserProfile = async () => {
       try {
         console.log("Fired useEffect hook and , before hitting url ")
         // Make the API request to fetch user profile data
-        const response = await UserProfileUrl(); // Assuming UserProfileUrl returns the user profile data
-        console.log(response)
+        let response = await UserProfileUrl(); // Assuming UserProfileUrl returns the user profile data
         // Set the retrieved data in the state
         setUserData(response);
       } catch (error) {
+        Navigate("/")
         console.error('Error fetching user profile data:', error);
         // Handle the error, e.g., show an error message to the user
       }
@@ -30,6 +30,7 @@ function UserProfile() {
 
     // Call the fetchUserProfile function when the component mounts
     fetchUserProfile();
+    
   }, []);
 
   return (
