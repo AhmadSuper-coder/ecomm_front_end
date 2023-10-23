@@ -15,30 +15,53 @@ const axiosInstance = axios.create({
 
 
 axiosInstance.interceptors.request.use(
-    config => {
-      
-      const token = getAccessToken()
-      if (token) {
-        config.headers['Authorization'] = getAccessToken()
-      }
-      // config.headers['Content-Type'] = 'application/json';
-      return config
-    },
-    error => {
-      Promise.reject(error)
+  config => {
+    
+    const token = getAccessToken()
+    if (token) {
+      config.headers['Authorization'] = `Bearer ${getAccessToken()}`; // Include "Bearer" prefix
+
     }
-  )
+    // config.headers['Content-Type'] = 'application/json';
+    return config
+  },
+  error => {
+    Promise.reject(error)
+  }
+)
 
+  // Add a response interceptor to handle token expiration and refresh
+axiosInstance.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+  async (error) => {
 
-// // Set the access token in the headers for every request
-// axiosInstance.interceptors.request.use(config => {
-//     console.log(config)
-//     const token = yourAuthToken; // Get the token from your storage
-//     if (token) {
-//       config.headers.Authorization = `Bearer ${token}`;
-//     }
-//     return config;
-//   });
+    if (error.response && error.response.status === 401) {
+      // Token expired, try to refresh it
+      const refreshToken = getRefreshToken();
+      // if user will have already refreshToken only in that case we will generate new refressh token 
+      if (refreshToken) {
+        try {
+          const refreshResponse = await axios.post(
+            `${BaseUrl}/api/token/refresh/`,
+            { refresh: refreshToken }
+          );
+          const newAccessToken = refreshResponse.data.access;
+          setAccessToken(newAccessToken);
+          // Retry the original request with the new access token
+          error.config.headers['Authorization'] = `Bearer ${newAccessToken}`;
+        } catch (refreshError) {
+          // If refresh fails, log the user out or handle it as needed
+          console.error('Refresh token failed:', refreshError);
+          // Handle logout or other actions here
+        }
+      }
+    }
+    return Promise.reject(error);
+  }
+);
+
 
 
 

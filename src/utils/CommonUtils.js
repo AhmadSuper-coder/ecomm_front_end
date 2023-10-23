@@ -8,9 +8,9 @@ export const getRefreshToken = () => {
 }
 
 export const setAccessToken = (accessToken) => {
-    sessionStorage.setItem('accessToken', `Bearer ${accessToken}`);
+    sessionStorage.setItem('accessToken', `${accessToken}`);
 }
 
 export const setRefreshToken = (refreshToken) => {
-    sessionStorage.setItem('refreshToken', `Bearer ${refreshToken}`);
+    sessionStorage.setItem('refreshToken', `${refreshToken}`);
 }
