@@ -1,11 +1,23 @@
-import React from 'react'
-// import styles from '../css/navbar.module.css';
-// import './App.css';
+import React,{useState,useEffect,useContext} from 'react'
+import { getAccessToken,getRefreshToken,clearToken } from '../../utils/CommonUtils';
 import {Link} from "react-router-dom";
 import { AiOutlineHome,AiOutlineFundProjectionScreen,AiOutlineLogin,AiOutlineUser,AiOutlineShoppingCart} from "react-icons/ai";
 import {ImBlog} from "react-icons/im";
+import { useAuth } from '../../context/AuthContext';
+
 
 function Navbar() {
+   
+    const { isLoggedIn } = useAuth();
+    console.log("This is the login props from userAuth",isLoggedIn)
+    // const isLoggedIn=false
+
+    const handleLogout = ()=>{
+        clearToken()
+        window.location.reload(); // Refresh the page
+        console.log("Logout Successfully")
+    }
+
     return (
         <>
             <nav className="navbar sticky-top  navbar-expand-lg bg-dark  bg-body-tertiary" data-bs-theme="dark" style={{zIndex:"2"}}>
@@ -26,10 +38,6 @@ function Navbar() {
                             </li>
 
                             <li className="nav-item">
-                                <Link className="nav-link" to="/profile"> <span style={{fontSize:"20px", marginRight:"2px"}} ><AiOutlineUser/></span>profile</Link>
-                            </li>
-
-                            <li className="nav-item">
                                 <Link className="nav-link" to="/cart"> <span style={{fontSize:"20px", marginRight:"2px"}} ><AiOutlineShoppingCart/></span>Cart</Link>
                             </li>
 
@@ -37,14 +45,49 @@ function Navbar() {
                                 <Link className="nav-link" to="/blog"> <span style={{fontSize:"20px", marginRight:"2px"}} ><ImBlog/></span>Blog</Link>
                             </li>
 
+                            {isLoggedIn ? (
+                                <>
+                                <li className="nav-item">
+                                <Link className="nav-link" to="/profile">
+                                    <span style={{ fontSize: "20px", marginRight: "2px" }}>
+                                    <AiOutlineUser />
+                                    </span>
+                                    Profile
+                                </Link>
+                                </li>
 
-                            <li className="nav-item">
-                                <Link className="nav-link" to="/login"> <span style={{fontSize:"20px",marginRight:"3px"}} ><AiOutlineLogin/></span>Login</Link>
-                            </li>
+                                <li className="nav-item" onClick={handleLogout}>
+                                <Link className="nav-link">
+                                    <span style={{ fontSize: "20px", marginRight: "2px" }}>
+                                    <AiOutlineUser />
+                                    </span>
+                                    Logout
+                                </Link>
+                                </li>
+                                
+                                </>
+                                
+                            ) : (
+                                <>
+                                <li className="nav-item">
+                                    <Link className="nav-link" to="/login">
+                                    <span style={{ fontSize: "20px", marginRight: "3px" }}>
+                                        <AiOutlineLogin />
+                                    </span>
+                                    Login
+                                    </Link>
+                                </li>
+                                <li className="nav-item">
+                                    <Link className="nav-link" to="/register">
+                                    <span style={{ fontSize: "20px", marginRight: "3px" }}>
+                                        <AiOutlineLogin />
+                                    </span>
+                                    SignUp
+                                    </Link>
+                                </li>
+                                </>
+                            )}
 
-                            <li className="nav-item">
-                                <Link className="nav-link" to="/register"> <span style={{fontSize:"20px",marginRight:"3px"}} ><AiOutlineLogin/></span>SignUp</Link>
-                            </li>
 
                         </ul>
                         

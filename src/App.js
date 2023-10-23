@@ -1,6 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
-
+import { AuthProvider } from './context/AuthContext';
 
 // src/App.js
 import React from 'react';
@@ -10,8 +10,10 @@ import Navbar from './components/Header/Navbar'; // Import the Navbar component
 function App() {
   return (
     <div className="App">
+      <AuthProvider>
       <Navbar /> 
       <AppRoutes />
+      </AuthProvider>
     </div>
   );
 }

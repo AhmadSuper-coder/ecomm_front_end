@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from "axios"
 import { setRefreshToken,setAccessToken } from '../../utils/CommonUtils';
 import { LoginUsersUrl } from '../../services/api';
+import { useAuth } from '../../context/AuthContext';
 
 var LoginData={
     email:"",
@@ -15,6 +16,8 @@ function Login() {
     const [LoginData,SetLoginData]=useState(LoginData);
     const {email,password}=useState(LoginData);
     const Navigate=useNavigate();
+    const { login_state } = useAuth(); // Get the login function from AuthContext
+
 
     const handleChange=(event)=>{
         console.log(LoginData)
@@ -31,7 +34,7 @@ function Login() {
             }
 
           const response = await LoginUsersUrl(LoginData);
-
+          login_state()
         }
         catch(e){
             console.log("There is some server Error")

@@ -14,3 +14,8 @@ export const setAccessToken = (accessToken) => {
 export const setRefreshToken = (refreshToken) => {
     sessionStorage.setItem('refreshToken', `${refreshToken}`);
 }
+
+export const clearToken = () => {
+    sessionStorage.removeItem('accessToken');
+    sessionStorage.removeItem('refreshToken');
+}
